@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .mooi{
+            background-color: blanchedalmond;
+            padding:20px;
+            border: 1px dashed red;
+        }
+    </style>
 <script>
+    function functiefelix(){
+        console.log("go");
+        fetch("http://127.0.0.1:5000/tom")
+        .then(r => r.json())
+        .then(d => eigennaam(d))
+    }
+    function eigennaam(data){
+        var q = document.getElementById("waarhetnaartoemoet");
+        var insidestring = "";
+        for(let x = 0; x < data.length; x++){
+            if(data[x].Age == 25){
+                console.log(data[x])
+                insidestring += `<tr><td class="mooi">${data[x].Cust_name}</td><td class="mooi">${data[x].Gender}</td></tr>`;
+            }
+        }
+        console.log(q.innerHTML);
+        q.innerHTML = `<table>${insidestring}</table>`;
+        console.log(q.innerHTML);
+
+        
+    }
+
 </script>
 </head>
 <body>
     felix
     wijziging
+    <button onclick="functiefelix()">Klik hier</button>
+    <div id="waarhetnaartoemoet"></div>
 </body>
 </html>
