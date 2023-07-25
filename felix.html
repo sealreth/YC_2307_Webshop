@@ -30,10 +30,29 @@
 
         
     }
-
+    function opslaanproduct(){
+        console.log("opslaan");
+        let onsproduct = {};
+        onsproduct.categorie = document.getElementById("catinput").value;
+        onsproduct.leverancier = document.getElementById("levinput").value;
+        console.log(onsproduct);
+        var onsProductJSON = JSON.stringify(onsproduct);
+        console.log(onsProductJSON);
+        fetch("http://localhost:8083/voegproductentoe", {
+            method: 'post',
+            headers: {"Content-type": "application/json"},
+            body: onsProductJSON
+        })
+    }
 </script>
 </head>
 <body>
+
+    Toevoegen
+    leverancier:<input id="levinput"><br>
+    categorie:<input id="catinput"><br>
+    <button onclick="opslaanproduct()">opslaan</button><br>
+    <hr><hr>
     felix
     wijziging
     <button onclick="functiefelix()">Klik hier</button>
