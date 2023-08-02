@@ -4,12 +4,12 @@
     <title>Festival Store Information</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var myC
+        var myChart;
         window.onload = function () {
-            toonTabel("Auto")
+            toonTabel("Clothing & Apparel")
         }
-        function toonTabel(gekcat){    
-        fetch("http://127.0.0.1:5000/tombarchart2/"+gekcat)
+        function toonTabel(gekcat) {    
+            fetch("http://127.0.0.1:5000/tombarchart2/" + gekcat)
                 .then(response => response.json())
                 .then(datar => {
                     const labels = ["Male", "Female"];
@@ -17,43 +17,59 @@
                     const femaleOrders = datar.filter(item => item.Gender === "F").reduce((acc, item) => acc + item.Orders, 0);
                     const ctx = document.getElementById('ageGroupProductCategoryChart');
 
-                    new Chart(ctx, {
+                    myChart = new Chart(ctx, {
                         type: 'bar',
-                        data : {
-                        labels: labels,
-                        datasets: [{
-                            label: 'My First Dataset',
-                            data: [maleOrders, femaleOrders],
-                            backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            ],
-                            borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            ],
-                        borderWidth: 1
-  }]}})})
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: gekcat,
+                                data: [maleOrders, femaleOrders],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                ],
+                                borderColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(255, 159, 64)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        }
+                    });
+                })
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
         }
-        function verander(){
-            console.log("je hebt gewijzigd");
+
+        function verander() {
             var keuze = document.getElementById("mijndropdown").value;
-            console.log(keuze);
-            fetch("http://127.0.0.1:5000/tombarchart2/"+keuze)
+            myChart.destroy();
+            toonTabel(keuze);
         }
     </script>
 </head>
 <body>
-
     <select onchange="verander()" id="mijndropdown">
         <option value="Clothing & Apparel">kleding</option>
-        <option value="Autos">wagens</option>
-        </option>
+        <option value="Food">voedsel</option>
+        <option value="Electronics & Gadgets">elektronica</option>
+        <option value="Footwear & Shoes">schoenen</option>
+        <option value="Household items">huishoudelijke artikelen</option>
+        <option value="Furniture">meubels</option>
+        <option value="Games & Toys">spellen en speelgoed</option>
+        <option value="Beauty">schoonheid</option>
+        <option value="Sports Products">sportartikelen</option>
+        <option value="Pet Care">dierenverzorging</option>
+        <option value="Books">boeken</option>
+        <option value="Stationery">kantoorbenodigdheden</option>
+        <option value="Office">kantoor</option>
+        <option value="Auto">wagens</option>
+        <option value="Tupperware">Tupperware</option>
+        <option value="Veterinary">dierenarts</option>
+        <option value="Decor">decor</option>
+        <option value="Hand & Power Tools">hand- en elektrisch gereedschap</option>
     </select>
     <canvas id="ageGroupProductCategoryChart" width="400" height="200"></canvas>
-
 </body>
 </html>
