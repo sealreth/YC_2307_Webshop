@@ -4,8 +4,12 @@
     <title>Festival Store Information</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        var myC
         window.onload = function () {
-            fetch("http://127.0.0.1:5000/tombarchart")
+            toonTabel("Auto")
+        }
+        function toonTabel(gekcat){    
+        fetch("http://127.0.0.1:5000/tombarchart2/"+gekcat)
                 .then(response => response.json())
                 .then(datar => {
                     const labels = ["Male", "Female"];
@@ -15,28 +19,41 @@
 
                     new Chart(ctx, {
                         type: 'bar',
-  data : {
-  labels: labels,
-  datasets: [{
-    label: 'My First Dataset',
-    data: [maleOrders, femaleOrders],
-    backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-    ],
-    borderColor: [
-      'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-    ],
-    borderWidth: 1
+                        data : {
+                        labels: labels,
+                        datasets: [{
+                            label: 'My First Dataset',
+                            data: [maleOrders, femaleOrders],
+                            backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            ],
+                            borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            ],
+                        borderWidth: 1
   }]}})})
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
         }
+        function verander(){
+            console.log("je hebt gewijzigd");
+            var keuze = document.getElementById("mijndropdown").value;
+            console.log(keuze);
+            fetch("http://127.0.0.1:5000/tombarchart2/"+keuze)
+        }
     </script>
 </head>
 <body>
+
+    <select onchange="verander()" id="mijndropdown">
+        <option value="Clothing & Apparel">kleding</option>
+        <option value="Autos">wagens</option>
+        </option>
+    </select>
     <canvas id="ageGroupProductCategoryChart" width="400" height="200"></canvas>
+
 </body>
 </html>
