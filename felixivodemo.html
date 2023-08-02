@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Side Stuff</title>
+    <style>
+#coordinate {
+    position: absolute;
+    top:10px;
+    left:75%;
+    border: 1px solid #444;
+    padding:2px 4px;
+    border-radius: 4px;
+    background-color: gold;
+    font: caption;
+    filter: drop-shadow(1px 1px 2px gray);
+    font-family: monospace;
+    z-index:3;
+}
+        /* style definitions go here */
+        #outputarea {
+    position: absolute;
+    right: 32px;
+    background-color: aliceblue;
+    border: 1px dashed gray;
+    min-width: 300px;
+    min-height: 100px;
+    padding: 4px;
+    border-radius: 4px;
+}
+.example {
+    color: green;
+    /* border:1px solid black;*/
+    /* background-color:hotpink;*/
+}
+.something {
+    color: violet;
+    /* border:1px solid black;*/
+    /* background-color:lime;*/
+    /* margin :5px; */
+    /* display: inline-block; */
+    /* border-radius: 50%; */
+    /* position: absolute; */
+}
+button {
+    border: 1px outset gray;
+    border-radius: 4px;
+    background-color: white;
+    padding: 8px;
+    cursor: pointer;
+    margin:0 4px
+}
+
+button:active {
+    border-style: inset;
+    filter: invert(1);
+}
+.dot {
+    position:absolute;
+    z-index:3;
+}     
+    </style>
+    <script>
+onmousemove = (event) => {
+    let offset = {
+        x: 4,
+        y: 18,
+    };
+    let node = document.getElementById("coordinate");
+    node.innerHTML = event.clientX + ", " + event.clientY + " over " + event.target.localName;
+    node.style.left = event.clientX + offset.x + "px";
+    node.style.top = event.clientY + offset.y + "px";
+}
+        /* script code goes here */
+        function CreateHTML() {
+    let node = document.createElement("DIV");
+    node.classList.add("example");
+    node.append("Dit is HTML gegenereerd door JS functie");
+    document.getElementById("outputarea").append(node);
+}
+
+let somethingcounter = 0;
+class SomeThing {
+    constructor() {
+        this.Create(++somethingcounter);
+    }
+    //---------------------------------------------
+    Create(label) {
+        let node = document.createElement("DIV");
+        node.classList.add("something");
+        node.append(label);
+        document.getElementById("outputarea").append(node);
+    }
+}      
+    </script>
+</head>
+<body>
+    <div id="coordinate"></div>
+    <div id="outputarea"></div>
+    <button onclick="CreateHTML()">CreateHTML()</button>
+    <button onclick="new SomeThing()">new SomeThing()</button>
+    </body></html>
