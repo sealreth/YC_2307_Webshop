@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Festival Store Information</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.onload = function () {
+            fetch("http://127.0.0.1:5000/tombarchart")
+                .then(response => response.json())
+                .then(data => {
+                    const labels = ["Male", "Female"];
+                    const maleOrders = data.filter(item => item.Gender === "M").reduce((acc, item) => acc + item.Orders, 0);
+                    const femaleOrders = data.filter(item => item.Gender === "F").reduce((acc, item) => acc + item.Orders, 0);
+                    const ctx = document.getElementById('ageGroupProductCategoryChart');
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Male',
+                                data: [maleOrders,0],
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Female',
+                                data: [0,femaleOrders],
+                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                                borderColor: 'rgb(255, 159, 64)',
+                                borderWidth: 1
+                            }]
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <canvas id="ageGroupProductCategoryChart" width="400" height="200"></canvas>
+</body>
+</html>
