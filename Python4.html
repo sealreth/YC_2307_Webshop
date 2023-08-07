@@ -2,27 +2,37 @@
 <html>
 <head>
     <title>Festival Store Information</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <!-- Graphs-->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Heatmap-->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> <!-- Map-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> <!-- Map2-->
     <style>
         #map {
             height: 500px;
             width: 100%;
         }
+        /* Add margin-bottom to create vertical space between graphs */
+        canvas {
+            margin-bottom: 20px; /* Adjust the value as per your preference */
+        }
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px; /* Add margin-top to create space between the map and the last graph */
+        }
     </style>
+    
     <script>
-        var myChart1; // Renamed from myChart to myChart1
+        
+        var myChart1; 
         var myChart2;
         var Mychart3;
         var Mychart4;
         var MyChart5;
-      
 
         window.onload = function () {
             toonTabel("Clothing & Apparel");
-            toonTabel2("Amount spend per occupation"); // Call toonTabel2 here to display the second graph on page load
+            toonTabel2("Amount spend per occupation"); 
             toonTabel3("Money eared per product category");
             toonTabel4("Money spend per age group per gender");
             toonTabel5("Amount spend per state + mapview");
@@ -459,9 +469,6 @@
                 .catch(error => console.error('Error fetching data:', error));
         }
 
-
-
-
     </script>
 </head>
 <body>
@@ -485,17 +492,14 @@
         <option value="Decor">decor</option>
         <option value="Hand & Power Tools">hand- en elektrisch gereedschap</option>
     </select>
+
     <canvas id="ageGroupProductCategoryChart" width="400" height="150"></canvas>
     <canvas id="AmountOccupationsChart" width="400" height="150"></canvas>
     <canvas id="AmountProduct_CategoryChart" width="400" height="150"></canvas>
     <canvas id="AmountAgeGroupChart" width="400" height="150"></canvas>
-
     <div id="heatmap"></div>
 
-
     <div id="map"></div>
-
-
 
 </body>
 </html>
