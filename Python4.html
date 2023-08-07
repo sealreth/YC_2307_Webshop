@@ -73,7 +73,13 @@
                     console.error('Error fetching data:', error);
                 });
         }
-        
+            // dropdown menu reset
+            function verander() {
+                var keuze = document.getElementById("mijndropdown").value;
+                myChart1.destroy();
+                toonTabel(keuze);
+            }
+
         // Amount spend per occupation
         function toonTabel2(gekcat) {
             fetch("http://127.0.0.1:5000/JobEarnings")
@@ -331,7 +337,7 @@
                     });
 
                     // Create the map
-                    map = L.map('map').setView([20.5937, 78.9629], 3);
+                    map = L.map('map').setView([20.5937, 78.9629], 4);
 
                     // Add the base map layer
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
