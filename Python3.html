@@ -9,7 +9,7 @@
             toonTabel("Clothing & Apparel")
         }
         function toonTabel(gekcat) {    
-            fetch("http://127.0.0.1:5000/tombarchart2/" + gekcat)
+            fetch("https://gray-field-0aa5fb003.3.azurestaticapps.net/tombarchart2/" + gekcat)
                 .then(response => response.json())
                 .then(datar => {
                     const labels = ["Male", "Female"];
@@ -57,7 +57,7 @@
             toonTabel2("Healthcare")
         }
         function toonTabel2() {    
-            fetch("http://127.0.0.1:5000/JobEarnings")
+            fetch("https://gray-field-0aa5fb003.3.azurestaticapps.net/JobEarnings")
                 .then(response => response.json())
                 .then(datar => {
                     const occupations = datar.map((row) => row.Occupation);
@@ -156,6 +156,7 @@
 
 </head>
 <body>
+    <button onclick="window.location.href = 'index.html';">HOME</button>
     <select onchange="verander()" id="mijndropdown">
         <option value="Clothing & Apparel">kleding</option>
         <option value="Food">voedsel</option>
