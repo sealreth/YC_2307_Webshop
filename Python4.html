@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Festival Store Information</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Heatmap-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -17,13 +18,15 @@
         var Mychart3;
         var Mychart4;
         var MyChart5;
+      
 
         window.onload = function () {
             toonTabel("Clothing & Apparel");
             toonTabel2("Amount spend per occupation"); // Call toonTabel2 here to display the second graph on page load
             toonTabel3("Money eared per product category");
             toonTabel4("Money spend per age group per gender");
-            toonTabel5("Amount spend per state + mapview")
+            toonTabel5("Amount spend per state + mapview");
+            createHeatmap(); // Call the function to create the heatmap
         }
 
         // male/female distribution per product category 
@@ -329,9 +332,9 @@
 
                         // Choose a color based on the amount
                         let color;
-                        if (amount < 10000) {
+                        if (amount < 2900078.0) { // Q1
                             color = 'green';
-                        } else if (amount < 50000) {
+                        } else if (amount < 8976811.3625) { // Q3
                             color = 'yellow';
                         } else {
                             color = 'red';
@@ -412,12 +415,52 @@
                 return stateLongitudes[state] || 0; // Return 0 if the longitude is not found
             }
 
+        // Heatmap age group vs prod_cat
+        function createHeatmap() {
+            fetch('http://127.0.0.1:5000/HeatmapAgeProdID')
+                .then(response => response.json())
+                .then(data => {
+                    // Extract data from the JSON
+                    const ageGroups = Array.from(new Set(data.map(entry => entry["Age Group"])));
+                    const productCategories = Array.from(new Set(data.map(entry => entry.Product_Category)));
 
-        function verander() {
-            var keuze = document.getElementById("mijndropdown").value;
-            myChart1.destroy(); // Destroy the first chart before creating a new one
-            toonTabel(keuze);
+                    // Create a 2D array to store the heatmap data
+                    const heatmapData = [];
+
+                    // Populate the heatmap data array
+                    for (let i = 0; i < ageGroups.length; i++) {
+                        const row = productCategories.map(category => {
+                            const entries = data.filter(entry => entry["Age Group"] === ageGroups[i] && entry.Product_Category === category);
+                            const sumAmount = entries.reduce((total, entry) => total + entry.Amount, 0);
+                            return sumAmount;
+                        });
+                        heatmapData.push(row);
+                    }
+
+                    // Create the heatmap trace using Plotly.js
+                    const trace = {
+                        x: productCategories,
+                        y: ageGroups,
+                        z: heatmapData,
+                        type: 'heatmap',
+                        colorscale: 'Viridis',
+                    };
+
+                    // Define the layout of the heatmap
+                    const layout = {
+                        title: 'Heatmap of Amount by Age Group and Product Category',
+                        xaxis: { title: 'Product Category' },
+                        yaxis: { title: 'Age Group' },
+                    };
+
+                    // Plot the heatmap
+                    Plotly.newPlot('heatmap', [trace], layout);
+                })
+                .catch(error => console.error('Error fetching data:', error));
         }
+
+
+
 
     </script>
 </head>
@@ -445,8 +488,10 @@
     <canvas id="ageGroupProductCategoryChart" width="400" height="150"></canvas>
     <canvas id="AmountOccupationsChart" width="400" height="150"></canvas>
     <canvas id="AmountProduct_CategoryChart" width="400" height="150"></canvas>
-    
     <canvas id="AmountAgeGroupChart" width="400" height="150"></canvas>
+
+    <div id="heatmap"></div>
+
 
     <div id="map"></div>
 
