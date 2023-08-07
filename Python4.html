@@ -318,7 +318,7 @@
                     });
 
                     // Create the map
-                    map = L.map('map').setView([20.5937, 78.9629], 5);
+                    map = L.map('map').setView([20.5937, 78.9629], 3);
 
                     // Add the base map layer
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
@@ -363,7 +363,7 @@
                 // For example, you can create an object like:
                 const stateLatitudes = {
                     'Maharashtra': 19.7515,
-                    'Andhra Pradesh': 15.9129, //
+                    'Andhra\u00a0Pradesh': 15.9129, //Andhra\u00a0Pradesh
                     'Uttar Pradesh': 26.8467,
                     'Karnataka': 15.3173,
                     'Gujarat': 22.2587,
@@ -391,7 +391,7 @@
                 // For example, you can create an object like:
                 const stateLongitudes = {
                     'Maharashtra': 75.7139,
-                    'Andhra Pradesh':79.7400 , //
+                    'Andhra\u00a0Pradesh':79.7400 , //
                     'Uttar Pradesh': 80.9462,
                     'Karnataka': 75.7139,
                     'Gujarat': 71.1924,
