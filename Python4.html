@@ -438,7 +438,8 @@
                 .then(response => response.json())
                 .then(data => {
                     // Extract data from the JSON
-                    const ageGroups = Array.from(new Set(data.map(entry => entry["Age Group"])));
+                    const ageGroups = Array.from(new Set(data.map(entry => entry["Age Group"])))
+                    .sort(compareAgeRanges); // Sort age groups in ascending order
                     const productCategories = Array.from(new Set(data.map(entry => entry.Product_Category)));
 
                     // Create a 2D array to store the heatmap data
@@ -474,6 +475,34 @@
                     Plotly.newPlot('heatmap', [trace], layout);
                 })
                 .catch(error => console.error('Error fetching data:', error));
+        }
+            // Custom function to compare age range strings for sorting
+            function compareAgeRanges(a, b) {
+            // Function to extract the lower bound of an age range string
+            function extractLowerBound(str) {
+                const lowerBoundStr = str.split('-')[0];
+                return lowerBoundStr === '55+' ? Infinity : parseInt(lowerBoundStr, 10);
+            }
+
+            // Function to extract the upper bound of an age range string
+            function extractUpperBound(str) {
+                const upperBoundStr = str.split('-')[1];
+                return upperBoundStr === '+' ? Infinity : parseInt(upperBoundStr, 10);
+            }
+
+            // Extract lower and upper bounds of age range strings for comparison
+            const lowerBoundA = extractLowerBound(a);
+            const lowerBoundB = extractLowerBound(b);
+
+            // If the lower bounds are different, use them for sorting
+            if (lowerBoundA !== lowerBoundB) {
+                return lowerBoundA - lowerBoundB;
+            }
+
+            // If the lower bounds are the same, use the upper bounds for sorting
+            const upperBoundA = extractUpperBound(a);
+            const upperBoundB = extractUpperBound(b);
+            return upperBoundA - upperBoundB;
         }
 
     </script>
