@@ -9,7 +9,7 @@
             toonTabel("Clothing & Apparel")
         }
         function toonTabel(gekcat) {    
-            fetch("https://gray-field-0aa5fb003.3.azurestaticapps.net/tombarchart2/" + gekcat)
+            fetch("https://zealous-island-01ea8fd03.3.azurestaticapps.net/tombarchart2/" + gekcat)
                 .then(response => response.json())
                 .then(datar => {
                     const labels = ["Male", "Female"];
@@ -57,7 +57,7 @@
             toonTabel2("Healthcare")
         }
         function toonTabel2() {    
-            fetch("https://gray-field-0aa5fb003.3.azurestaticapps.net/JobEarnings")
+            fetch("https://zealous-island-01ea8fd03.3.azurestaticapps.net/JobEarnings")
                 .then(response => response.json())
                 .then(datar => {
                     const occupations = datar.map((row) => row.Occupation);
