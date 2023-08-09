@@ -41,7 +41,7 @@
 
         // male/female distribution per product category 
         function toonTabel(gekcat) {
-            fetch("https://yc2307python.azurewebsites.net/tombarchart2/" + gekcat)
+            fetch("https://yc2307pythonbe.azurewebsites.net/tombarchart2/" + gekcat)
                 .then(response => response.json())
                 .then(datar => {
                     const labels = ["Male", "Female"];
@@ -82,7 +82,7 @@
 
         // Amount spend per occupation
         function toonTabel2(gekcat) {
-            fetch("https://yc2307python.azurewebsites.net/JobEarnings")
+            fetch("https://yc2307pythonbe.azurewebsites.net/JobEarnings")
                 .then(response => response.json())
                 .then(datar => {
                     const occupations = datar.map((row) => row.Occupation);
@@ -165,7 +165,7 @@
        
         // Amount earned per product category
         function toonTabel3(gekcat) {
-            fetch("https://yc2307python.azurewebsites.net/ProdEarnings")
+            fetch("https://yc2307pythonbe.azurewebsites.net/ProdEarnings")
                 .then(response => response.json())
                 .then(datar => {
                     const Product_Category = datar.map((row) => row.Product_Category);
@@ -248,7 +248,7 @@
 
         // Amount spend per age group per gender
         function toonTabel4() {
-            fetch("https://yc2307python.azurewebsites.net/AgeSexAmount") 
+            fetch("https://yc2307pythonbe.azurewebsites.net/AgeSexAmount") 
                 .then(response => response.json())
                 .then(data => {
                     // Group the data by Age Group and Gender
@@ -319,7 +319,7 @@
 
         // Amount spend per State in mapview
         function toonTabel5() {
-            fetch("https://yc2307python.azurewebsites.net/State")
+            fetch("https://yc2307pythonbe.azurewebsites.net/State")
                 .then(response => response.json())
                 .then(data => {
                     // Create an object to accumulate the total amount for each state
@@ -433,7 +433,7 @@
 
         // Heatmap age group vs prod_cat
         function createHeatmap() {
-            fetch('https://yc2307python.azurewebsites.net/HeatmapAgeProdID')
+            fetch('https://yc2307pythonbe.azurewebsites.net/HeatmapAgeProdID')
             // fetch('http://127.0.0.1:5000/HeatmapAgeProdID')
                 .then(response => response.json())
                 .then(data => {
