@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Productenlijst</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <br>
+    <button onclick="window.location.href = 'index.html';">HOME</button>
+    <script>
+        fetch("https://yc2307javaapp.azurewebsites.net/alleproducten")
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('tableBody');
+            const productCategories = {}; // Create an object to store categories and their "getal" values
+
+            data.forEach(row => {
+                const newRow = document.createElement('tr');
+                const columnsToDisplay = ["id", "leverancier",	"naam",	"categorie",	"maat",	"prijs",	"productbeschrijving",	"productfoto",	"voorraad"];
+
+                columnsToDisplay.forEach(column => {
+                    const cell = document.createElement('td');
+                    cell.textContent = row[column];
+                    newRow.appendChild(cell);
+                });
+
+                tableBody.appendChild(newRow);
+
+                // Store the "getal" value associated with the category
+                const category = row["categorie"];
+                const getalValue = parseFloat(row["voorraad"]);
+                if (!isNaN(getalValue)) {
+                    if (!productCategories[category]) {
+                        productCategories[category] = [];
+                    }
+                    productCategories[category].push(getalValue);
+                }
+            });
+
+            // Calculate the average "getal" value for each category
+            const averageGetalByCategory = {};
+            for (const category in productCategories) {
+                const getalValues = productCategories[category];
+                const total = getalValues.reduce((acc, value) => acc + value, 0);
+                const average = total / getalValues.length;
+                averageGetalByCategory[category] = average;
+            }
+
+            // Get the canvas element and create the chart
+            const ctx = document.getElementById('productCategoryChart').getContext('2d');
+            const productCategoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(averageGetalByCategory),
+                    datasets: [{
+                        label: 'Voorraad per product categorie',
+                        data: Object.values(averageGetalByCategory),
+                        backgroundColor: ['red', 'blue', 'green', 'yellow', 'pink'], // You can customize the colors here
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+
+        function opslaanproduct(){
+        console.log("opslaan")
+        let onsproduct = {};
+        onsproduct.categorie = document.getElementById("catinput").value;
+        onsproduct.naam = document.getElementById("naaminput").value
+        onsproduct.leverancier = document.getElementById("levinput").value;
+        onsproduct.maat = document.getElementById("maatinput").value
+        onsproduct.prijs = document.getElementById("prijsinput").value
+
+        onsproduct.productbeschrijving = document.getElementById("pbinput").value
+        onsproduct.productfoto = document.getElementById("pfinput").value
+        onsproduct.voorraad = document.getElementById("voorraadinput").value
+
+        console.log(onsproduct)
+        var onsProductJSON = JSON.stringify(onsproduct);
+        console.log(onsProductJSON);
+        fetch("https://yc2307javaapp.azurewebsites.net/voegproductentoe", {
+            method: 'post',
+            headers: {"Content-type": "application/json"},
+            body: onsProductJSON
+        })
+
+    }
+
+    function verwijderproduct() {
+    console.log("verwijder");
+    const productId = document.getElementById("idinput").value;
+
+    fetch(`https://yc2307javaapp.azurewebsites.net/verwijderproducten/${productId}`, {
+        method: 'DELETE',
+        headers: { "Content-type": "application/json" }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Product successfully deleted.");
+            // Optionally, you can update the table after deletion to reflect the changes immediately
+            // by re-fetching and updating the table data.
+            fetchDataAndUpdateTable();
+        } else {
+            console.log("Failed to delete product.");
+        }
+    })
+    .catch(error => {
+        console.error("Error occurred while deleting product:", error);
+    });
+}
+function fetchDataAndUpdateTable() {
+    fetch("https://yc2307javaapp.azurewebsites.net/alleproducten")
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        const productCategories = {};
+
+        data.forEach(row => {
+            const newRow = document.createElement('tr');
+            const columnsToDisplay = ["id", "leverancier", "naam", "categorie", "maat", "prijs", "productbeschrijving", "productfoto", "voorraad"];
+
+            columnsToDisplay.forEach(column => {
+                const cell = document.createElement('td');
+                cell.textContent = row[column];
+                newRow.appendChild(cell);
+            });
+
+            tableBody.appendChild(newRow);
+
+            const category = row["categorie"];
+            const getalValue = parseFloat(row["voorraad"]);
+            if (!isNaN(getalValue)) {
+                if (!productCategories[category]) {
+                    productCategories[category] = [];
+                }
+                productCategories[category].push(getalValue);
+            }
+        });
+
+                const averageGetalByCategory = {};
+        for (const category in productCategories) {
+            const getalValues = productCategories[category];
+            const total = getalValues.reduce((acc, value) => acc + value, 0);
+            const average = total / getalValues.length;
+            averageGetalByCategory[category] = average;
+        }
+
+            const productCategoryChart = Chart.getChart("productCategoryChart");
+        if (productCategoryChart) {
+            productCategoryChart.data.labels = Object.keys(averageGetalByCategory);
+            productCategoryChart.data.datasets[0].data = Object.values(averageGetalByCategory);
+            productCategoryChart.update();
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+
+function updateproduct() {
+    console.log("update");
+
+   
+    const productId = document.getElementById("idinput").value;
+
+    
+    const updatedProduct = {
+        categorie: document.getElementById("catinput").value,
+        naam: document.getElementById("naaminput").value,
+        leverancier: document.getElementById("levinput").value,
+        maat: document.getElementById("maatinput").value,
+        prijs: document.getElementById("prijsinput").value,
+        productbeschrijving: document.getElementById("pbinput").value,
+        productfoto: document.getElementById("pfinput").value,
+        voorraad: document.getElementById("voorraadinput").value
+    };
+
+    console.log(updatedProduct);
+
+    
+    fetch(`https://yc2307javaapp.azurewebsites.net/bewerkproducten/${productId}`, {
+        method: 'PUT',
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(updatedProduct)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Product successfully updated.");
+            fetchDataAndUpdateTable();
+        } else {
+            console.log("Failed to update product.");
+        }
+    })
+    .catch(error => {
+        console.error("Error occurred while updating product:", error);
+    });
+}
+
+function laatproductenzien() {
+    const table = document.getElementById("storeData");
+    table.style.display = "table";
+}
+    </script>
+
+
+
+
+<div class="container">
+    <div class="col-12"> <h1>Productenlijst</h1> </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3"><table>
+        <tr>
+          <th>Veld</th>
+          <th>Waarde</th>
+        </tr>
+        <tr>
+          <td>id:</td>
+          <td><input id="idinput"></td>
+        </tr>
+        <tr>
+          <td>leverancier:</td>
+          <td><input id="levinput"></td>
+        </tr>
+        <tr>
+          <td>naam:</td>
+          <td><input id="naaminput"></td>
+        </tr>
+        <tr>
+          <td>categorie:</td>
+          <td><input id="catinput"></td>
+        </tr>
+        <tr>
+          <td>maat:</td>
+          <td><input id="maatinput"></td>
+        </tr>
+        <tr>
+          <td>prijs:</td>
+          <td><input id="prijsinput"></td>
+        </tr>
+        <tr>
+          <td>productbeschrijving:</td>
+          <td><input id="pbinput"></td>
+        </tr>
+        <tr>
+          <td>productfoto:</td>
+          <td><input id="pfinput"></td>
+        </tr>
+        <tr>
+          <td>voorraad:</td>
+          <td><input id="voorraadinput"></td>
+        </tr>
+      </table>
+      </div>
+      <div class="row">
+      <div class="col-12 col-md-6 col-lg-3">
+        <br>
+        <button type="button" class="btn btn-dark" onclick="opslaanproduct()">opslaan</button>
+        <br>
+        <button type="button" class="btn btn-dark" onclick="laatproductenzien()">laat producten zien</button>
+        <br>
+        <button type="button" class="btn btn-dark" onclick="updateproduct()">update</button>
+        <br>
+        <button type="button" class="btn btn-dark" onclick="verwijderproduct()">verwijder</button>
+        <br>
+        <div id="waarhetnaartoemoet"></div>
+        <br></div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Tabel</h2>
+        </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <table id="storeData" style="display: none; border: 1px solid black">
+
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>leverancier</th>
+                <th>naam</th>
+                <th>categorie</th>
+                <th>maat</th>a
+                <th>prijs</th>
+                <th>productbeschrijving</th>
+                <th>productfoto</th>
+                <th>voorraad</th>
+                
+            </tr>
+        </thead>
+        
+    
+        <tbody id="tableBody">
+            <!-- Data fetched from the server will be added here -->
+        </tbody>
+    </table>
+    <br>
+    
+    <div style="width: 400px; height: 300px; border: 1px;"><canvas id="productCategoryChart" width="400" height="200"></canvas></div></div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
