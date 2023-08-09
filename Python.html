@@ -34,7 +34,8 @@
 
     <script>
         // fetch("https://gray-field-0aa5fb003.3.azurestaticapps.net/tom")
-        fetch("https://yc2307python.azurewebsites.net/tom")
+        //fetch("https://yc2307python.azurewebsites.net/tom")
+        fetch('http://127.0.0.1:5000/tom')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById('tableBody');
