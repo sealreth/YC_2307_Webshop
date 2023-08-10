@@ -50,7 +50,7 @@
             // Get the canvas element and create the chart
             const ctx = document.getElementById('productCategoryChart').getContext('2d');
             const productCategoryChart = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'polarArea',
                 data: {
                     labels: Object.keys(averageGetalByCategory),
                     datasets: [{
@@ -286,7 +286,7 @@ function laatproductenzien() {
             <h2>Tabel</h2>
         </div>
       <div class="col-12 col-md-6 col-lg-3">
-        <table id="storeData" style="display: none; border: 1px solid black">
+            <table id="storeData" style="display: none; border: 1px solid black">
 
         <thead>
             <tr>
