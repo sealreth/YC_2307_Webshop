@@ -45,7 +45,7 @@
                 <br>
                 <button type="button" class="btn btn-dark" onclick="saveAccount()">Save</button>
                 <br>
-                <button type="button" class="btn btn-dark" onclick="showAccounts()">Show Accounts</button>
+                <button type="button" class="btn btn-dark" onclick="fetchAccounts()">Show Accounts</button>
                 <br>
                 <button type="button" class="btn btn-dark" onclick="updateAccount()">Update</button>
                 <br>
@@ -162,7 +162,27 @@
             }
         </script>
         
+        <table id="storeData" style="display: none; border: 1px solid black">
 
-
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>leeftijd</th>
+                    <th>email</th>
+                    <th>password</th>a
+                    <th>gender</th>
+                </tr>
+            </thead>
+            
+            
+            
+            
+            
+        
+            <tbody id="tableBody">
+                <!-- Data fetched from the server will be added here -->
+            </tbody>
+        </table>
 </body>
 </html>
