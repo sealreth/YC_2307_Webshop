@@ -13,13 +13,7 @@ function addShoppingCartEntry(accountId, productId, amount) {
     .then(response => response.json())
     .then(success => {
         if (success) {
-            let messagesContainerElement = document.getElementById('messages-container');
-            messagesContainerElement.innerHTML = `
-            <div id="alert-fixed" class="alert alert-success alert-dismissible alert-fixed" role="alert">
-                <span id="alert-fixed-message">Product is toegevoegd</span>
-                <button type="button" class="btn-close pull-right" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            `
+            displaySuccessMessage("Product is toegevoegd")        
 
             getShoppingCartEntriesCount(accountId);
         }

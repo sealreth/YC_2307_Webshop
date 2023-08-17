@@ -10828,7 +10828,7 @@ textarea.form-control-lg {
 
 /* Eigen styling */
 
-.alert-fixed {
+#messages-container {
   position:fixed; 
   bottom: 12px; 
   right: 12px; 
