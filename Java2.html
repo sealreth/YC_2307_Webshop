@@ -5,186 +5,193 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <link href="css/styles.css">
+
     <script src="js/base.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="col-12"> <h1>Account Management</h1> </div>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
-                <table>
-                    <tr>
-                        <th>Veld</th>
-                        <th>Waarde</th>
-                    </tr>
-                    <tr>
-                        <td>ID:</td>
-                        <td><input id="idinput"></td>
-                    </tr>
-                    <tr>
-                        <td>Naam:</td>
-                        <td><input id="usernameinput"></td>
-                    </tr>
-                    <tr>
-                        <td>Leeftijd</td>
-                        <td><input id="ageinput"></td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td><input id="emailinput"></td>
-                    </tr>
-                    <tr>
-                        <td>Wachtwoord</td>
-                        <td><input id="passwordinput"></td>
-                    </tr>
-                    <tr>
-                        <td>Gender</td>
-                        <td><input id="genderinput"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <br>
-                <button type="button" class="btn btn-dark" onclick="saveAccount()">Save</button>
-                <br>
-                <button type="button" class="btn btn-dark" onclick="fetchAccounts()">Show Accounts</button>
-                <br>
-                <button type="button" class="btn btn-dark" onclick="updateAccount()">Update</button>
-                <br>
-                <button type="button" class="btn btn-dark" onclick="deleteAccount()">Delete</button>
-                <br>
-                <div id="resultMessage"></div>
-                <br>
+        <div class="row mb-3">
+            <div class="col-12">
+                <h1>Account Management</h1>
             </div>
         </div>
-        <script>
-            function fetchAccounts() {
-                fetch(BACKEND_URL + `/api/accounts`)
-                .then(response => response.json())
-                .then(data => {
-                    const tableBody = document.getElementById('tableBody');
-                    
-                    tableBody.innerHTML = '';
-        
-                    data.forEach(account => {
-                        console.log('account' + account)
-                        const newRow = document.createElement('tr');
-                        const columnsToDisplay = ["id", "naam", "leeftijd", "email", "gender"];
-        
-                        columnsToDisplay.forEach(column => {
-                            const cell = document.createElement('td');
-                            cell.textContent = account[column];
-                            newRow.appendChild(cell);
-                        });
-        
-                        tableBody.appendChild(newRow);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching account data:', error);
-                });
-            }
-        
-            
-            fetchAccounts();
-        
-            function saveAccount() {
-                const newAccount = {
-                    naam: document.getElementById("usernameinput").value,
-                    leeftijd: document.getElementById("ageinput").value,
-                    email: document.getElementById("emailinput").value,
-                    wachtwoord: document.getElementById("passwordinput").value,
-                    gender: document.getElementById("genderinput").value
-                    
-                };
-        
-                fetch(BACKEND_URL + "/api/saveaccounts", {
-                    method: 'POST',
-                    headers: {"Content-type": "application/json"},
-                    body: JSON.stringify(newAccount)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("Account successfully saved.");
-                        fetchAccounts(); 
-                    } else {
-                        console.log("Failed to save account.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error occurred while saving account:", error);
-                });
-            }
-        
-            function updateAccount() {
-                const accountId = document.getElementById("idinput").value;
-                const updatedAccount = {
-                    naam: document.getElementById("usernameinput").value,
-                    leeftijd: document.getElementById("ageinput").value,
-                    email: document.getElementById("emailinput").value,
-                    wachtwoord: document.getElementById("passwordinput").value,
-                    gender: document.getElementById("genderinput").value
-                };
-        
-                fetch(BACKEND_URL + `/api/updateaccounts/${accountId}`, {
-                    method: 'PUT',
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify(updatedAccount)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("Account successfully updated.");
-                        fetchAccounts();
-                    } else {
-                        console.log("Failed to update account.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error occurred while updating account:", error);
-                });
-            }
-        
-            function deleteAccount() {
-                const accountId = document.getElementById("idinput").value;
-        
-                fetch(BACKEND_URL + `/api/deleteaccounts/${accountId}`, {
-                    method: 'DELETE',
-                    headers: { "Content-type": "application/json" }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("Account successfully deleted.");
-                        fetchAccounts();
-                    } else {
-                        console.log("Failed to delete account.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error occurred while deleting account:", error);
-                });
-            }
-        </script>
-        
-        <table id="storeData" style="border: 1px solid black">
+        <div class="row mb-3">
+            <div class="col-12">
+                <table id="storeData" class="table table-striped">
 
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>naam</th>
-                    <th>leeftijd</th>
-                    <th>email</th>
-                    <th>gender</th>
-                </tr>
-            </thead>
-            
-            
-            
-            
-            
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Naam</th>
+                            <th>Leeftijd</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="tableBody">
+                        <!-- Data fetched from the server will be added here -->
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h2>Gebruiker opslaan</h2>
+            </div>
+            <div class="col-12 mb-3">
+                <label for="idinput" class="form-label">ID</label>
+                <input type="text" class="form-control" id="idinput" placeholder="Vul een id in">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="usernameinput" class="form-label">Naam</label>
+                <input type="text" class="form-control" id="usernameinput" placeholder="Vul een naam in">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="ageinput" class="form-label">Leeftijd</label>
+                <input type="text" class="form-control" id="ageinput" placeholder="Vul een leeftijd in">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="emailinput" class="form-label">Email</label>
+                <input type="text" class="form-control" id="emailinput" placeholder="Vul een email adres in">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="passwordinput" class="form-label">Wachtwoord</label>
+                <input type="text" class="form-control" id="passwordinput" placeholder="Vul een wachtwoord in">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="genderinput" class="form-label">Gender</label>
+                <input type="text" class="form-control" id="genderinput" placeholder="Vul een gender in">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <button type="button" class="btn btn-primary" onclick="saveAccount()">Save</button>
+                <button type="button" class="btn btn-primary" onclick="fetchAccounts()">Show Accounts</button>
+                <button type="button" class="btn btn-warning" onclick="updateAccount()">Update</button>
+                <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete</button>
+                <div id="resultMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hier kunnen we berichten in weergeven -->
+    <div id="messages-container">
+    </div>
+
+    <script>
+        function fetchAccounts() {
+            fetch(BACKEND_URL + `/api/accounts`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('tableBody');
+                
+                tableBody.innerHTML = '';
+    
+                data.forEach(account => {
+                    console.log('account' + account)
+                    const newRow = document.createElement('tr');
+                    const columnsToDisplay = ["id", "naam", "leeftijd", "email", "gender"];
+    
+                    columnsToDisplay.forEach(column => {
+                        const cell = document.createElement('td');
+                        cell.textContent = account[column];
+                        newRow.appendChild(cell);
+                    });
+    
+                    tableBody.appendChild(newRow);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching account data:', error);
+            });
+        }
+    
         
-            <tbody id="tableBody">
-                <!-- Data fetched from the server will be added here -->
-            </tbody>
-        </table>
+        fetchAccounts();
+    
+        function saveAccount() {
+            const newAccount = {
+                naam: document.getElementById("usernameinput").value,
+                leeftijd: document.getElementById("ageinput").value,
+                email: document.getElementById("emailinput").value,
+                password: document.getElementById("passwordinput").value,
+                gender: document.getElementById("genderinput").value
+            };
+    
+            fetch(BACKEND_URL + "/api/saveaccounts", {
+                method: 'POST',
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(newAccount)
+            })
+            .then(response => {
+                if (response.ok) {
+                    displaySuccessMessage("Account is opgeslagen")
+
+                    fetchAccounts(); 
+                } else {
+                    console.log("Failed to save account.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred while saving account:", error);
+            });
+        }
+    
+        function updateAccount() {
+            const accountId = document.getElementById("idinput").value;
+            const updatedAccount = {
+                naam: document.getElementById("usernameinput").value,
+                leeftijd: document.getElementById("ageinput").value,
+                email: document.getElementById("emailinput").value,
+                password: document.getElementById("passwordinput").value,
+                gender: document.getElementById("genderinput").value
+            };
+    
+            fetch(BACKEND_URL + `/api/updateaccounts/${accountId}`, {
+                method: 'PUT',
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(updatedAccount)
+            })
+            .then(response => {
+                if (response.ok) {
+                    displaySuccessMessage("Account is opgeslagen")
+
+                    fetchAccounts();
+                } else {
+                    console.log("Failed to update account.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred while updating account:", error);
+            });
+        }
+    
+        function deleteAccount() {
+            const accountId = document.getElementById("idinput").value;
+    
+            fetch(BACKEND_URL + `/api/deleteaccounts/${accountId}`, {
+                method: 'DELETE',
+                headers: { "Content-type": "application/json" }
+            })
+            .then(response => {
+                if (response.ok) {
+                    displaySuccessMessage("Account is verwijderd")
+
+                    fetchAccounts();
+                } else {
+                    console.log("Failed to delete account.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred while deleting account:", error);
+            });
+        }
+    </script>
+      
+
 </body>
 </html>
