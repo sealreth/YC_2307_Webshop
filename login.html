@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+  <main class="form-signin">
+    <form>
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <div class="form-floating">
+        <input type="email" class="form-control" id="inputEmail" placeholder="Email address" required>
+        <label for="inputEmail">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="button" id="loginButton">Sign in</button>
+    </form>
+  </main>
+  
+  <script>
+    const loginButton = document.getElementById('loginButton');
+    
+    loginButton.addEventListener('click', async () => {
+      const email = document.getElementById('inputEmail').value;
+      const password = document.getElementById('inputPassword').value;
+      
+      // Construct the API URL
+      const backendUrl = "BACKEND_URL";
+      const apiUrl = `${backendUrl}api/findaccount/{username}${username}&password=${password}`; //
+      
+      try {
+        // Make an API request to retrieve user account information
+        const response = await fetch(apiUrl);
+        
+        if (response.ok) {
+          const accountInfo = await response.json();
+          
+          // Here, you can implement your authentication logic based on the accountInfo.
+          // For the sake of this example, let's simulate a successful login and redirect.
+          if (accountInfo.valid) {
+            window.location.href = 'index.html';
+          } else {
+            alert('Login failed. Invalid credentials.');
+          }
+        } else {
+          alert('Error fetching account information.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      
+      // Clear input fields after processing
+      document.getElementById('inputEmail').value = '';
+      document.getElementById('inputPassword').value = '';
+    });
+  </script>
+</body>
+</html>
+
