@@ -60,12 +60,15 @@ function deleteCartItem(entryId) {
     // Add your fetch logic here to delete the cart item
     // Update the cart content after successful deletion
     fetch(BACKEND_URL + '/api/shoppingcart/entry/' + entryId, {
-        method: 'delete'
+        method: 'DELETE'
     })
-    .then(() => {
-        displaySuccessMessage("Product is verwijderd uit winkelwagen") 
+    .then(response => response.text())
+    .then(success => {
+        if (success) {
+            displaySuccessMessage("Product is verwijderd uit winkelwagen")
 
-        getShoppingCartEntries(accountId);
+            getShoppingCartEntries(1);
+        }
     })
 }
 
