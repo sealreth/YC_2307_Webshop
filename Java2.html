@@ -34,7 +34,7 @@
                         <td><input id="emailinput"></td>
                     </tr>
                     <tr>
-                        <td>Password</td>
+                        <td>Wachtwoord</td>
                         <td><input id="passwordinput"></td>
                     </tr>
                     <tr>
@@ -59,7 +59,7 @@
         </div>
         <script>
             function fetchAccounts() {
-                fetch(BACKEND_URL + "/api/accounts")
+                fetch(BACKEND_URL + `/api/accounts`)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('tableBody');
@@ -67,6 +67,7 @@
                     tableBody.innerHTML = '';
         
                     data.forEach(account => {
+                        console.log('account' + account)
                         const newRow = document.createElement('tr');
                         const columnsToDisplay = ["id", "naam", "leeftijd", "email", "gender"];
         
@@ -89,10 +90,10 @@
         
             function saveAccount() {
                 const newAccount = {
-                    username: document.getElementById("usernameinput").value,
+                    naam: document.getElementById("usernameinput").value,
                     leeftijd: document.getElementById("ageinput").value,
                     email: document.getElementById("emailinput").value,
-                    password: document.getElementById("passwordinput").value,
+                    wachtwoord: document.getElementById("passwordinput").value,
                     gender: document.getElementById("genderinput").value
                     
                 };
@@ -118,14 +119,14 @@
             function updateAccount() {
                 const accountId = document.getElementById("idinput").value;
                 const updatedAccount = {
-                    username: document.getElementById("usernameinput").value,
+                    naam: document.getElementById("usernameinput").value,
                     leeftijd: document.getElementById("ageinput").value,
                     email: document.getElementById("emailinput").value,
-                    password: document.getElementById("passwordinput").value,
+                    wachtwoord: document.getElementById("passwordinput").value,
                     gender: document.getElementById("genderinput").value
                 };
         
-                fetch(`https://yc2307javaapp.azurewebsites.net/api/updateaccounts/${accountId}`, {
+                fetch(BACKEND_URL + `/api/updateaccounts/${accountId}`, {
                     method: 'PUT',
                     headers: { "Content-type": "application/json" },
                     body: JSON.stringify(updatedAccount)
@@ -146,7 +147,7 @@
             function deleteAccount() {
                 const accountId = document.getElementById("idinput").value;
         
-                fetch(`https://yc2307javaapp.azurewebsites.net/api/deleteaccounts/${accountId}`, {
+                fetch(BACKEND_URL + `/api/deleteaccounts/${accountId}`, {
                     method: 'DELETE',
                     headers: { "Content-type": "application/json" }
                 })
@@ -164,15 +165,14 @@
             }
         </script>
         
-        <table id="storeData" style="display: none; border: 1px solid black">
+        <table id="storeData" style="border: 1px solid black">
 
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>username</th>
+                    <th>naam</th>
                     <th>leeftijd</th>
                     <th>email</th>
-                    <th>password</th>a
                     <th>gender</th>
                 </tr>
             </thead>
