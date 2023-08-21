@@ -105,7 +105,7 @@
     console.log("verwijder");
     const productId = document.getElementById("idinput").value;
 
-    fetch(`https://yc2307javaapp.azurewebsites.net/verwijderproducten/${productId}`, {
+    fetch(BACKEND_URL + "/verwijderproducten/{productid}", {
         method: 'DELETE',
         headers: { "Content-type": "application/json" }
     })
@@ -195,7 +195,7 @@ function updateproduct() {
     console.log(updatedProduct);
 
     
-    fetch(`https://yc2307javaapp.azurewebsites.net/bewerkproducten/${productId}`, {
+    fetch(BACKEND_URL + "/bewerkproducten/${productId}", {
         method: 'PUT',
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(updatedProduct)
