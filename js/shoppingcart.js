@@ -13,7 +13,7 @@ function addShoppingCartEntry(accountId, productId, amount) {
     .then(response => response.text())
     .then(success => {
         if (success) {
-            displaySuccessMessage("Product is toegevoegd")        
+            displaySuccessMessage("Product is toegevoegd aan winkelwagen")        
 
             getShoppingCartEntries(accountId);
         }
