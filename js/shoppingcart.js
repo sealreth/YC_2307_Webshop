@@ -1,7 +1,7 @@
-function addShoppingCartEntry(accountId, productId, amount) {
+function addShoppingCartEntry(productId, amount) {
     let dto = {
         'productId': productId,
-        'accountId': accountId,
+        'accountId': localStorage.getItem("accountId"),
         'amount': amount
     }
 
@@ -10,18 +10,18 @@ function addShoppingCartEntry(accountId, productId, amount) {
         headers: {"Content-type": "application/json"},
         body: JSON.stringify(dto)
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(success => {
         if (success) {
             displaySuccessMessage("Product is toegevoegd aan winkelwagen")        
 
-            getShoppingCartEntries(accountId);
+            getShoppingCartEntries();
         }
     })
 }
 
-function getShoppingCartEntries(accountId) {
-    fetch(BACKEND_URL + '/api/shoppingcart/' + accountId + '/entries')
+function getShoppingCartEntries() {
+    fetch(BACKEND_URL + '/api/shoppingcart/' + localStorage.getItem("accountId") + '/entries')
         .then(response => response.json())
         .then(cartItems => {
 
@@ -52,7 +52,7 @@ function getShoppingCartEntries(accountId) {
 }
 
 window.addEventListener("load", (event) => {
-    getShoppingCartEntries(1);
+    getShoppingCartEntries();
 });
 // Inside the window.addEventListener("load", ...) block
 
@@ -67,7 +67,7 @@ function deleteCartItem(entryId) {
         if (success) {
             displaySuccessMessage("Product is verwijderd uit winkelwagen")
 
-            getShoppingCartEntries(1);
+            getShoppingCartEntries();
         }
     })
 }

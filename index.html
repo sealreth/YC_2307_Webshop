@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="A festival Webshop" />
         <meta name="author" content="sealreth" />
-        <title>AWESOME fastival webs</title>
+        <title>AWESOME festival webs</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/duck.ico" />
         <!-- Bootstrap icons-->
@@ -27,8 +27,9 @@
                         <li class="nav-item"><a class="nav-link" href="Python4.html">DATA</a></li>
                         <li class="nav-item"><a class="nav-link" href="Java2.html">Account Aanmaken</a></li>
                         <!-- <li class="nav-item"><a class="nav-link" href="product.html">Product</a></li> -->
-                        <li class="nav-item"><a class="nav-link" href="Java.html">Product toevoegen</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.html">login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Java.html">Product Toevoegen</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" style= "cursor: pointer;" onclick="localStorage.clear(); window.location.href='index.html'">Logout</a></li>
                        
                        
                         <!-- <li class="nav-item dropdown">
@@ -106,7 +107,7 @@
                         <div class="col-12 col-md-4 mb-3">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <img onclick="window.location.href="product.html?id=${product.id}""class="card-img-top" src="${product.productfoto}" alt="..." />
+                                <img style= "cursor: pointer;" onclick= "window.location.href='product.html?id=${product.id}'"  class="card-img-top" src="${product.productfoto}" alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -118,7 +119,7 @@
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"  onclick="addShoppingCartEntry(1, ${product.id}, 1)">Add to cart</a></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"  onclick="addShoppingCartEntry(${product.id}, 1)">Add to cart</a></div>
                                 </div>
                             </div>
                         </div>                        
