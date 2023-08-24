@@ -198,7 +198,7 @@
                 gender: document.getElementById("genderinput").value
             };
     
-            fetch(BACKEND_URL + `/api/updateaccounts/${accountId}`, {
+            fetch(BACKEND_URL + "/api/updateaccounts/" + accountId, {
                 method: 'PUT',
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(updatedAccount)
@@ -220,7 +220,7 @@
         function deleteAccount() {
             const accountId = document.getElementById("idinput").value;
     
-            fetch(BACKEND_URL + `/api/deleteaccounts/${accountId}`, {
+            fetch(BACKEND_URL + "/api/deleteaccounts/" + accountId, {
                 method: 'DELETE',
                 headers: { "Content-type": "application/json" }
             })
