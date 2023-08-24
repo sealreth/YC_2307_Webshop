@@ -10,7 +10,7 @@ function addShoppingCartEntry(accountId, productId, amount) {
         headers: {"Content-type": "application/json"},
         body: JSON.stringify(dto)
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(success => {
         if (success) {
             displaySuccessMessage("Product is toegevoegd")        
