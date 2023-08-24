@@ -2,28 +2,98 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="A festival Webshop" />
+        <meta name="author" content="sealreth" />
+        <title>AWESOME festival Login</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/duck.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
 
-<body class="text-center">
-  <main class="form-signin">
-    <form>
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-      <div class="form-floating">
-        <input type="email" class="form-control" id="inputEmail" placeholder="Email address" required>
-        <label for="inputEmail">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
-        <label for="inputPassword">Password</label>
-      </div>
-      <button class="w-100 btn btn-lg btn-primary" type="button" id="loginButton">Sign in</button>
-    </form>
-  </main>
+        <script src="js/base.js"></script>
+    </head>
 
+<body style="background-color: #f9f9f9;">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.html">Quackers! Webshop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Python4.html">DATA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Java2.html">Account Aanmaken</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="product.html">Product</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="Java.html">Product toevoegen</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="login.html">login</a></li>
+                       
+                       
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="product.html">Product</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                   <!-- <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span id="shoppingcart-count" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form> -->
+                 <form class="d-flex">
+                    <div class="dropdown" id="shopping-cart-dropdown">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="submit" id="shopping-cart-button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span id="shoppingcart-count" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="shopping-cart-button" id="shopping-cart-content">
+                            <!-- Shopping cart content will be inserted here -->
+                        </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+
+  <div class="shadow p-3 mb-5 bg-body rounded container px-2 px-lg-5 mt-5 col-12 col-md-12">
+          <div class="row">
+              <div class=""> <!--col align-self-end-->
+                  <div>
+                    <main class="form-signin">
+                        <form>
+                          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                          <div class="form-floating">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email address" required>
+                            <label for="inputEmail">Email address</label>
+                          </div>
+                          <br>
+                          <div class="form-floating">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                            <label for="inputPassword">Password</label>
+                          </div>
+                          <br>
+                          <button class="w-100 btn btn-lg btn-primary" type="button" id="loginButton">Sign in</button>
+                        </form>
+                      </main>
+                  </div>
+              </div>
+          </div>
+      </div>
   <script>
     const loginButton = document.getElementById('loginButton');
 
@@ -73,6 +143,9 @@
       document.getElementById('inputPassword').value = '';
     });
   </script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
