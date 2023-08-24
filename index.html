@@ -26,7 +26,9 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="Python4.html">DATA</a></li>
                         <li class="nav-item"><a class="nav-link" href="Java2.html">Account Aanmaken</a></li>
-                        <li class="nav-item"><a class="nav-link" href="product.html">Product</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="product.html">Product</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="Java.html">Product toevoegen</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">login</a></li>
                        
                        
                         <!-- <li class="nav-item dropdown">
@@ -104,7 +106,7 @@
                         <div class="col-12 col-md-4 mb-3">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="${product.productfoto}" alt="..." />
+                                <img onclick="window.location.href="product.html?id=${product.id}""class="card-img-top" src="${product.productfoto}" alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
