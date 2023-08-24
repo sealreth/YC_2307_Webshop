@@ -29,30 +29,48 @@
       const email = document.getElementById('inputEmail').value;
       const password = document.getElementById('inputPassword').value;
       
-      // Construct the API URL
-      const backendUrl = "BACKEND_URL";
-      const apiUrl = `${backendUrl}api/findaccount/{username}${username}&password=${password}`; //
+
+      const apiUrl = "http://localhost:8082/api/account/login";
       
       try {
-        // Make an API request to retrieve user account information
-        const response = await fetch(apiUrl);
-        
-        if (response.ok) {
-          const accountInfo = await response.json();
-          
-          // Here, you can implement your authentication logic based on the accountInfo.
-          // For the sake of this example, let's simulate a successful login and redirect.
-          if (accountInfo.valid) {
-            window.location.href = 'index.html';
-          } else {
-            alert('Login failed. Invalid credentials.');
-          }
-        } else {
-          alert('Error fetching account information.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
+  const response = await fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
+    })
+  });
+
+  console.log('Response status:', response.status);
+  console.log('Response status text:', response.statusText);
+
+  if (response.ok) {
+    const text = await response.text();
+
+    console.log('Response content:', text);
+
+    if (text.trim() === "") {
+      alert('Login failed. Invalid credentials.');
+    } else {
+      const accountInfo = JSON.parse(text);
+
+      if (accountInfo && accountInfo.token) {
+        localStorage.setItem('token', accountInfo.token);
+        window.location.href = 'index.html';
+      } else {
+        alert('Login failed. Invalid credentials.');
       }
+    }
+  } else {
+    alert('Error fetching account information.');
+  }
+} catch (error) {
+  console.error('Error:', error);
+}
+
       
       // Clear input fields after processing
       document.getElementById('inputEmail').value = '';
@@ -61,4 +79,3 @@
   </script>
 </body>
 </html>
-
